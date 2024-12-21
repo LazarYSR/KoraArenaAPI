@@ -14,6 +14,22 @@ public class UserDaoImpl implements UserDao {
     private UserRepository userRepository;
     @Override
     public User AjouterUser(User user) {
+
         return userRepository.save(user);
     }
+<<<<<<< Updated upstream
+=======
+
+    @Override
+    public User GetUserInfo(String cin) {
+        return userRepository.findByCin(cin);
+    }
+
+    @Override
+    public User Authentification(String login, String password) {
+        return userRepository.findByLoginAndPassword(login,password);
+    }
+
+
+>>>>>>> Stashed changes
 }

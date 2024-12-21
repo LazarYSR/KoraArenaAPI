@@ -5,4 +5,5 @@ import ma.ehei.Prj_KoraArenaAPI.Models.Facture;
 
 public interface FactureDao {
     Facture AjouterFacture(Facture facture);
+    Facture FindFactureByID(String id);
 }
