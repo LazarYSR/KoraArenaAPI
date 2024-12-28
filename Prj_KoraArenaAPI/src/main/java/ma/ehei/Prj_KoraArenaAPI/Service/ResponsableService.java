@@ -3,6 +3,12 @@ package ma.ehei.Prj_KoraArenaAPI.Service;
 import ma.ehei.Prj_KoraArenaAPI.Dto.ResponsableDto;
 import ma.ehei.Prj_KoraArenaAPI.Dto.UserDto;
 
+import java.util.List;
+
 public interface ResponsableService {
-    public ResponsableDto AjouterResponsable(ResponsableDto responsableDto);
+    ResponsableDto addResponsable(ResponsableDto responsableDto);
+    List<ResponsableDto> getAllResponsables();
+    ResponsableDto getResponsableById(String id);
+    ResponsableDto updateResponsable(ResponsableDto responsableDto);
+    void deleteResponsable(String id);
 }

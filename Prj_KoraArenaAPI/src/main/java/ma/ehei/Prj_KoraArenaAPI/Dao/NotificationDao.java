@@ -1,8 +1,17 @@
 package ma.ehei.Prj_KoraArenaAPI.Dao;
 
-import ma.ehei.Prj_KoraArenaAPI.Models.Admin;
-import ma.ehei.Prj_KoraArenaAPI.Models.User;
+import ma.ehei.Prj_KoraArenaAPI.Models.Notification;
+
+import java.util.List;
+import java.util.Optional;
 
 public interface NotificationDao {
-    User EnvoyerNotification(User userEnvoyeur,User userRecepteur);
+
+    List<Notification> getAllNotifications();
+
+    Optional<Notification> getNotificationById(Long id);
+
+    Notification saveNotification(Notification notification);
+
+    void deleteNotification(Long id);
 }

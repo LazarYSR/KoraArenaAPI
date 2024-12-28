@@ -13,7 +13,7 @@ import java.util.Collection;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Invitation {
+public class Invitation{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

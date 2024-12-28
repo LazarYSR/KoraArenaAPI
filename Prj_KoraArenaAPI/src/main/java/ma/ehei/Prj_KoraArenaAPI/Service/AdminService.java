@@ -1,9 +1,14 @@
 package ma.ehei.Prj_KoraArenaAPI.Service;
 
 import ma.ehei.Prj_KoraArenaAPI.Dto.AdminDto;
-import ma.ehei.Prj_KoraArenaAPI.Dto.UserDto;
+
+import java.util.List;
 
 public interface AdminService {
-    public AdminDto AjouterAdmin(AdminDto adminDto);
-
+    AdminDto addAdmin(AdminDto adminDto);
+    AdminDto getAdminInfo(String cin);
+    AdminDto authenticateAdmin(String login, String password);
+    List<AdminDto> getAllAdmins();
+    void updateAdmin(AdminDto adminDto);
+    void deleteAdmin(String cin);
 }

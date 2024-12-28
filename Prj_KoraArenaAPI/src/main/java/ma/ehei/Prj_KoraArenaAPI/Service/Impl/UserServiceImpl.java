@@ -14,27 +14,53 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
+
     private final UserDao userDao;
-    private final UserDtoMapper userDtoMapper ;
+    private final UserDtoMapper userDtoMapper;
 
     @Override
     public UserDto AjouterUser(UserDto userDto) {
         User user = userDtoMapper.ToUser(userDto);
-        userDao.AjouterUser(user);
-        UserDto us1 = userDtoMapper.ToUserDto(user);
-        return us1;
+        User savedUser = userDao.AjouterUser(user);
+        return userDtoMapper.ToUserDto(savedUser);
     }
+
     @Override
     public UserDto UserInfo(String cin) {
-        User us =userDao.GetUserInfo(cin);
-        UserDto userDto= userDtoMapper.ToUserDto(us);
-        return userDto;
+        User user = userDao.GetUserInfo(cin);
+        return userDtoMapper.ToUserDto(user);
     }
 
     @Override
     public UserDto Authentification(String login, String password) {
-        User us =userDao.Authentification(login,password);
-        UserDto userDto= userDtoMapper.ToUserDto(us);
-        return userDto;
+        User user = userDao.Authentification(login, password);
+        return userDtoMapper.ToUserDto(user);
+    }
+
+    @Override
+    public List<UserDto> getAllUsers() {
+        List<User> users = userDao.getAllUsers();
+        return users.stream()
+                .map(userDtoMapper::ToUserDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void updateUser(UserDto userDto) {
+        User user = userDtoMapper.ToUser(userDto);
+        userDao.updateUser(user);
+    }
+
+    @Override
+    public void deleteUser(String cin) {
+        userDao.deleteUser(cin);
+    }
+
+    @Override
+    public List<UserDto> findUsersByActivityStatus(boolean active) {
+        List<User> users = userDao.findUsersByActivityStatus(active);
+        return users.stream()
+                .map(userDtoMapper::ToUserDto)
+                .collect(Collectors.toList());
     }
 }

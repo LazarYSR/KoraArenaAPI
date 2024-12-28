@@ -1,39 +1,65 @@
 package ma.ehei.Prj_KoraArenaAPI.Controller;
 
 import lombok.AllArgsConstructor;
-import ma.ehei.Prj_KoraArenaAPI.Dao.UserDao;
-import ma.ehei.Prj_KoraArenaAPI.Dto.SecteurDto;
 import ma.ehei.Prj_KoraArenaAPI.Dto.UserDto;
-import ma.ehei.Prj_KoraArenaAPI.Models.User;
-import ma.ehei.Prj_KoraArenaAPI.Service.SecteurService;
 import ma.ehei.Prj_KoraArenaAPI.Service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/users")
-@CrossOrigin("*")
-
+@RequestMapping("/api/users")
+@AllArgsConstructor
 public class UserController {
-    @Autowired
-    private UserService userService;
 
+    private final UserService userService;
 
-    @PostMapping("ajouter-user")
-    UserDto Ajouter(@RequestBody UserDto userDto)
-    {
-        return userService.AjouterUser(userDto);
+    @PostMapping
+    public ResponseEntity<UserDto> addUser(@RequestBody UserDto userDto) {
+        UserDto savedUser = userService.AjouterUser(userDto);
+        return ResponseEntity.ok(savedUser);
     }
 
-    @GetMapping("get-user")
-    UserDto RecupererInfoUser(String cin)
-    {
-        return userService.UserInfo(cin);
-    }
-    @GetMapping("auth-user/{log}/{pass}")
-    UserDto AuthentificationUser(@PathVariable("log")String login,@PathVariable("pass")String password)
-    {
-        return userService.Authentification(login, password);
+
+    @GetMapping("/{cin}")
+    public ResponseEntity<UserDto> getUserInfo(@PathVariable String cin) {
+        UserDto userDto = userService.UserInfo(cin);
+        return ResponseEntity.ok(userDto);
     }
 
+    @PostMapping("/auth")
+    public ResponseEntity<UserDto> authenticateUser(
+            @RequestParam String login,
+            @RequestParam String password) {
+        UserDto userDto = userService.Authentification(login, password);
+        return ResponseEntity.ok(userDto);
+    }
+
+
+    @GetMapping
+    public ResponseEntity<List<UserDto>> getAllUsers() {
+        List<UserDto> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
+    }
+
+
+    @PutMapping("/{cin}")
+    public ResponseEntity<Void> updateUser(@PathVariable String cin, @RequestBody UserDto userDto) {
+        userDto.setCin(cin);
+        userService.updateUser(userDto);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{cin}")
+    public ResponseEntity<Void> deleteUser(@PathVariable String cin) {
+        userService.deleteUser(cin);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/active/{status}")
+    public ResponseEntity<List<UserDto>> getUsersByActivityStatus(@PathVariable boolean status) {
+        List<UserDto> users = userService.findUsersByActivityStatus(status);
+        return ResponseEntity.ok(users);
+    }
 }

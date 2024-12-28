@@ -6,5 +6,9 @@ import ma.ehei.Prj_KoraArenaAPI.Models.Secteur;
 import java.util.List;
 
 public interface SecteurService {
-    List<SecteurDto> findSecteursByVille(String ville);
+    SecteurDto addSecteur(SecteurDto secteurDto);
+    List<SecteurDto> getAllSecteurs();
+    SecteurDto getSecteurByNom(String nomSecteur);
+    SecteurDto updateSecteur(SecteurDto secteurDto);
+    void deleteSecteur(String nomSecteur);
 }
